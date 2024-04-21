@@ -87,7 +87,7 @@ def card(
                     ),
                     rx.spacer(),
                     rx.vstack(
-                        rx.heading(interviewee, size="6"),
+                        rx.heading(interviewee, size="6", color="black"),
                         rx.heading(f"Interviewed by {interviewer}", size="2"),
                     ),
                     align="center",
