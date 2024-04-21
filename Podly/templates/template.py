@@ -113,6 +113,7 @@ def template(
                 navbar(),
                 page_content(),
                 footer(),
+                background_color="#161a1d"
             )
 
         @rx.page(

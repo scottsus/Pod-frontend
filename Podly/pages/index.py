@@ -18,20 +18,14 @@ def index():
     return rx.box(
         rx.vstack(
             rx.hstack(
-                rx.button(
-                    rx.text("🫘 Cocoa Pods", size="7", padding_top="1em", padding_bottom="2em", color="white",),
-                    height="60px",
-                    background_color="black", 
-                ),
                 rx.spacer(),
                 rx.select(
                     ["Tech", "Business", "Sports",],
-                    placeholder="Filter",
+                    placeholder="💃 Select your favorite category",
                     size="3",
                     on_change=FilterState.apply_filter,
-                    font_family="Inter",
                 ),
-                witdth="100px",
+                padding_y="2em",
             ),
             cards(FilterState),
             align="center",

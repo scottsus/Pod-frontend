@@ -109,7 +109,7 @@ def card(
                         rx.link(
                             rx.button(
                                 rx.text("Watch podcast", color="#343a40"),
-                                background_color="#6c757d",
+                                background_color="#e93d83",
                                 cursor="pointer",
                                 _hover={
                                     "opacity": "0.8",
