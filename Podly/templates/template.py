@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from Podly import styles
 from Podly.components.navbar import navbar
+from Podly.components.footer import footer
 from typing import Callable
 
 import reflex as rx
@@ -110,9 +111,8 @@ def template(
         def templated_page():
             return rx.vstack(
                 navbar(),
-                rx.box(
-                        page_content(),
-                )
+                page_content(),
+                footer(),
             )
 
         @rx.page(

@@ -9,13 +9,11 @@ import reflex as rx
 
 @template(route="/", title="Home")
 def index():
-    class ClickState(rx.State):
-        # when u press the button "tech" -> filter ONLY tech videos
+    class FilterState(rx.State):
+        filter_type: str = ""
 
-
-        pass
-        
-            
+        def apply_filter(self, filter_type: str):
+            self.filter_type = filter_type
 
     return rx.box(
         rx.vstack(
@@ -26,22 +24,16 @@ def index():
                     background_color="black", 
                 ),
                 rx.spacer(),
-                # rx.button(
-                #     rx.text(
-                #         "Filter", size="4", padding_top="2em", padding_bottom="2em", color="white",
-                #         ),
-                #     background_color="gray",
-                # ),
                 rx.select(
-                    ["Tech", "Finance", "Sport",],
+                    ["Tech", "Business", "Sports",],
                     placeholder="Filter",
                     size="3",
-                    # on_change=lambda sort_value: State.sort_values(sort_value),
+                    on_change=FilterState.apply_filter,
                     font_family="Inter",
                 ),
                 witdth="100px",
             ),
-            cards(),
+            cards(FilterState),
             align="center",
             padding_x="4em",
             padding_y="2em",

@@ -15,13 +15,15 @@ class CardProps:
         thumbnail_url: str,
         youtube_url: str,
         publish_date: str,
+        tag: str,
     ):
         self.interviewer: str = interviewer
         self.interviewee: str = interviewee
         self.insights: List[str] = insights
         self.thumbnail_url: str = thumbnail_url
-        self.youtube_url:str = youtube_url
-        self.publish_date:str = publish_date
+        self.youtube_url: str = youtube_url
+        self.publish_date: str = publish_date
+        self.tag: str = tag
 
 def fetch_card_data():
     data_list = cli.fetch_data()
@@ -35,12 +37,13 @@ def fetch_card_data():
         insight_3     = data["insight_3"]
         thumbnail_url = data["thumbnail_url"]
         youtube_url   = data["youtube_url"]
-        publish_date = data["publish_date"]
+        publish_date  = data["publish_date"]
+        tag           = data["tag"]
 
         insights_list = [insight_1, insight_2, insight_3]
         insights = [insight for insight in insights_list if insight != ""]
         cards_data.append(CardProps(
-            interviewer, interviewee, insights, thumbnail_url, youtube_url, publish_date
+            interviewer, interviewee, insights, thumbnail_url, youtube_url, publish_date, tag,
         ))
     
     return cards_data
@@ -117,21 +120,39 @@ def card(
         style={"box_shadow": "rgba(239, 239, 240, 0.8) 4px 4px"},
     )
 
-def cards() -> rx.Component:
+def cards(FilterState) -> rx.Component:
     cards_data = fetch_card_data()
     
     def map_cards(card_data: CardProps):
-        return card(
-            card_data.interviewer,
-            card_data.interviewee,
-            card_data.insights,
-            card_data.thumbnail_url,
-            card_data.youtube_url,
-            card_data.publish_date,
+        return rx.cond(
+            FilterState.filter_type == "",
+            card(
+                card_data.interviewer,
+                card_data.interviewee,
+                card_data.insights,
+                card_data.thumbnail_url,
+                card_data.youtube_url,
+                card_data.publish_date,
+            ),
+            rx.cond(
+                FilterState.filter_type == card_data.tag,
+                card(
+                    card_data.interviewer,
+                    card_data.interviewee,
+                    card_data.insights,
+                    card_data.thumbnail_url,
+                    card_data.youtube_url,
+                    card_data.publish_date,
+                ),
+                None,
+            ),
         )
 
+    def filter_nones(items):
+        return [item for item in items if item is not None]
+
     return rx.grid(
-        *map(map_cards, cards_data),
+        *filter_nones(map(map_cards, cards_data)),
         columns="3",
         width="100%",
         gap="20px",
