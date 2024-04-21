@@ -1,0 +1,3 @@
+python-dotenv==1.0.1
+reflex==0.4.8.post1
+supabase==2.4.3

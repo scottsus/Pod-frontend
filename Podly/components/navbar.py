@@ -44,7 +44,7 @@ def discord_button() -> rx.Component:
             },
             cursor="pointer"
         ),
-        href="https://github.com/WilsonLimSet/PodcastTest",
+        href="https://github.com/scottsus/Pod",
         target="_blank",
     )
 
@@ -54,7 +54,7 @@ def github_button() -> rx.Component:
             rx.hstack(
                 rx.image(src="/icons/github.svg", width="24px"),
                 rx.text("GitHub", font_size="16px", color="rgb(173,173,173)",),
-                callout("15k"),
+                callout(">10+"),
                 align="center",
             ),
             padding_y="1.5em",
@@ -68,7 +68,7 @@ def github_button() -> rx.Component:
             },
             cursor="pointer"
         ),
-        href="https://github.com/WilsonLimSet/PodcastTest",
+        href="https://github.com/scottsus/Pod",
         target="_blank",
     )
 
