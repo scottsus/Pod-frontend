@@ -35,7 +35,8 @@ def fetch_card_data():
         thumbnail_url = data["thumbnail_url"]
         youtube_url   = data["youtube_url"]
 
-        insights = [insight_1, insight_2, insight_3]
+        insights_list = [insight_1, insight_2, insight_3]
+        insights = [insight for insight in insights_list if insight != ""]
         cards_data.append(CardProps(
             interviewer, interviewee, insights, thumbnail_url, youtube_url
         ))
@@ -55,17 +56,35 @@ def card(
         The card component.
     """
     def map_rx_item(insight: str):
-        return rx.list.item(insight)
+        MAX_INSIGHT_LEN = 80
+        if len(insight) >= MAX_INSIGHT_LEN:
+            insight = insight[:MAX_INSIGHT_LEN] + "..."
+
+        return rx.list.item(
+            rx.text(
+                insight,
+            ),
+            padding="1.4em",
+            height="3em",
+
+            # this may be unsupported by reflex for now
+            # text_overflow="ellipsis",
+        )
 
     return rx.link(
         rx.box(
             rx.vstack(
                 rx.hstack(
+                    rx.image(
+                        src=thumbnail_url,
+                        height="100px",
+                        border_radius="5px"
+                    ),
+                    rx.spacer(),
                     rx.vstack(
                         rx.heading(interviewee, size="6"),
-                        rx.heading(f"Interviewed by {interviewer}", size="4"),
+                        rx.heading(f"Interviewed by {interviewer}", size="2"),
                     ),
-                    rx.image(src=thumbnail_url, width="100px", border_radius="5px"),
                 ),
 
                 rx.list.ordered(
@@ -78,6 +97,7 @@ def card(
                 "transition": "opacity 0.3s ease-in-out",
             },
         ),
+        height="20em",
         href=youtube_url,
         target="_blank",
         text_decoration="none",
