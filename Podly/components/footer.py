@@ -15,31 +15,41 @@ def link(text: str, href: str) -> rx.Component:
         color="inherit",
         target="_blank",
         text_decoration="none",
+        _hover={
+            "opacity": "0.7",
+            "transition": "opacity 0.2s ease-in-out",
+        }
     )
 
 
 def footer() -> rx.Component:
-    return rx.hstack(
-        rx.text(
-            "Built by ",
-            rx.link("@scottsus", href="https://github.com/scottsus", target="_blank"),
-            ", ",
-            rx.link("@wilsonLimSet", href="https://github.com/wilsonLimSet", target="_blank"),
-            ", ",
-            rx.link("@billsusanto", href="https://github.com/billsusanto", target="_blank"),
-            ". ",
-            color="rgb(173,173,173)"
-        ),
-        rx.spacer(),
+    return rx.vstack(
         rx.hstack(
-            rx.link(rx.image(src="/icons/github.svg"), href="https://github.com/scottsus/Pod-frontend", target="_blank"),
-            rx.link(rx.image(src="/icons/linkedin.svg"), href="https://linkedin.com/in/wilsonLimSetiawan", target="_blank"),
-            rx.link(rx.image(src="/icons/twitter.svg"), href="https://x.com/susantoscott", target="_blank"),
-            rx.link(rx.image(src="/icons/discord.svg"), href="https://x.com/susantoscott", target="_blank"),
-            spacing="4",
+            rx.text(
+                "Built by ",
+                link("@scottsus", "https://github.com/scottsus"),
+                ", ",
+                link("@wilsonLimSet", "https://github.com/wilsonLimSet"),
+                ", ",
+                link("@billsusanto", "https://github.com/billsusanto"),
+                ". ",
+                color="rgb(173,173,173)",
+                size="4",
+            ),
+            rx.spacer(),
+            rx.hstack(
+                icon("/icons/github.svg", "https://github.com/scottsus/Pod-frontend"),
+                icon("/icons/linkedin.svg", "https://linkedin.com/in/wilsonLimSetiawan"),
+                icon("/icons/twitter.svg", "https://x.com/susantoscott"),
+                icon("/icons/discord.svg", "https://linkedin.com/in/bill-susanto"),
+                spacing="5",
+            ),
+            width="94vw",
+            padding="1em",
+            style={"borderTop": "0.5px solid gray"},
         ),
         width="100vw",
-        padding="1em",
-        background_color="#0b090a",
-        style={"borderTop": "2px solid white"},
+        # background_color="#0b090a",
+        align="center",
+        padding_bottom="2em",
     )

@@ -9,7 +9,7 @@ def icon(path: str, href: str) -> rx.Component:
     return rx.link(
         rx.image(
             src=path,
-            width="25px",
+            width="30px",
             _hover={
                 "opacity": "0.7",
                 "transition": "opacity 0.3s ease-in-out",
