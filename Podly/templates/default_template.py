@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from Podly import styles
-from Podly.components.navbar import navbar
+from Podly.components.sidebar import sidebar
 from typing import Callable
 
 import reflex as rx
@@ -108,11 +108,21 @@ def template(
         all_meta = [*default_meta, *(meta or [])]
 
         def templated_page():
-            return rx.vstack(
-                navbar(),
+            return rx.hstack(
+                sidebar(),
                 rx.box(
+                    rx.vstack(
                         page_content(),
-                )
+                        rx.spacer(),
+                        rx.logo(),
+                        **styles.template_content_style,
+                    ),
+                    **styles.template_page_style,
+                ),
+                menu_button(),
+                align="start",
+                background=f"radial-gradient(circle at top right, {rx.color('accent', 2)}, {rx.color('mauve', 1)});",
+                position="relative",
             )
 
         @rx.page(

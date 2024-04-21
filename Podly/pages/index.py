@@ -7,7 +7,7 @@ from Podly.components.card import cards
 import reflex as rx
     
 
-@rx.page(route="/", title="Home")
+@template(route="/", title="Home")
 def index():
     class ClickState(rx.State):
         # when u press the button "tech" -> filter ONLY tech videos
