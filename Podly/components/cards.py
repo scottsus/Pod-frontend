@@ -70,55 +70,77 @@ def card(
             rx.text(
                 insight,
             ),
-            padding="1.4em",
-            height="3em",
+            padding_y="1em",
+            height="4em",
 
             # this may be unsupported by reflex for now
             # text_overflow="ellipsis",
         )
-
-    return rx.link(
-        rx.box(
-            rx.vstack(
-                rx.hstack(
-                    rx.image(
-                        src=thumbnail_url,
-                        height="110px",
-                        width="70%",
-                        style={"object-fit": "cover"},
-                        border_radius="5px",
-                    ),
-                    rx.spacer(),
-                    rx.vstack(
-                        rx.heading(interviewee, size="6", color="black"),
-                        rx.heading(f"Interviewed by {interviewer}", size="2"),
-                    ),
-                    align="center",
+    
+    return rx.vstack(
+            rx.box(
+                rx.image(
+                    src=thumbnail_url,
+                    width="100%",
+                    margin_y="-2.4em",
                 ),
-                
-                rx.text(
-                    f"Upload Date: {publish_date}"
-                ),
-
-                rx.list.ordered(
-                    *map(map_rx_item, insights)
-                ),
+                height="12em",
+                overflow="hidden",
             ),
-            padding="1em",
+            rx.vstack(
+                rx.box(
+                    rx.vstack(
+                        rx.heading(interviewee, size="8", color="black"),
+                        rx.heading(f"Interviewed by {interviewer}", size="4"),
+
+                        rx.box(
+                            rx.list.ordered(
+                                *map(map_rx_item, insights),
+                            ),
+                            rx.spacer(),
+                        ),
+                    ),
+                ),
+                rx.spacer(),
+                rx.box(
+                    rx.hstack(
+                        rx.text(publish_date),
+                        rx.spacer(),
+                        rx.link(
+                            rx.button(
+                                rx.text("Watch podcast", color="#343a40"),
+                                background_color="#6c757d",
+                                cursor="pointer",
+                                _hover={
+                                    "opacity": "0.8",
+                                    "transition": "opacity 0.2s ease-in-out",
+                                }
+                            ),
+                            href=youtube_url,
+                            target="_blank",
+                            text_decoration="none",
+                            color="inherit",
+                        ),
+                        align="center",
+                    ),
+                    width="100%",
+                    padding_x="0.2em",
+                    padding_y="0.4em",
+                    border_top="2px solid black",
+                ),
+                align="center",
+                padding_x="1em",
+                height="23em",
+            ),
+            height="36em",
             _hover={
-                "opacity": "0.7",
-                "transition": "opacity 0.3s ease-in-out",
+                "scale": "1.01",
+                "transition": "scale 0.25s ease-in-out",
             },
-        ),
-        height="22em",
-        href=youtube_url,
-        target="_blank",
-        text_decoration="none",
-        color="inherit",
-        background_color="white",
-        border_radius="10px",
-        style={"box_shadow": "rgba(239, 239, 240, 0.8) 4px 4px"},
-    )
+            background_color="#adb5bd",
+            border_radius="11px",
+            overflow="hidden",
+        )
 
 def cards(FilterState) -> rx.Component:
     cards_data = fetch_card_data()
@@ -153,7 +175,7 @@ def cards(FilterState) -> rx.Component:
 
     return rx.grid(
         *filter_nones(map(map_cards, cards_data)),
-        columns="3",
+        columns="4",
         width="100%",
         gap="20px",
     )

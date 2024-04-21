@@ -2,7 +2,7 @@
 
 from Podly import styles
 from Podly.templates import template
-from Podly.components.card import cards
+from Podly.components.cards import cards
 
 import reflex as rx
     
@@ -37,6 +37,6 @@ def index():
             align="center",
             padding_x="4em",
             padding_y="2em",
+            background_color="#161a1d"
         ),
-        background_color="black",
     )
