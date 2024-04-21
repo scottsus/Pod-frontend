@@ -6,7 +6,6 @@ from typing import List
 
 import reflex as rx
 
-
 class CardProps:
     def __init__(
         self,
@@ -15,12 +14,14 @@ class CardProps:
         insights: List[str],
         thumbnail_url: str,
         youtube_url: str,
+        publish_date: str,
     ):
         self.interviewer: str = interviewer
         self.interviewee: str = interviewee
         self.insights: List[str] = insights
         self.thumbnail_url: str = thumbnail_url
         self.youtube_url:str = youtube_url
+        self.publish_date:str = publish_date
 
 def fetch_card_data():
     data_list = cli.fetch_data()
@@ -34,11 +35,12 @@ def fetch_card_data():
         insight_3     = data["insight_3"]
         thumbnail_url = data["thumbnail_url"]
         youtube_url   = data["youtube_url"]
+        publish_date = data["publish_date"]
 
         insights_list = [insight_1, insight_2, insight_3]
         insights = [insight for insight in insights_list if insight != ""]
         cards_data.append(CardProps(
-            interviewer, interviewee, insights, thumbnail_url, youtube_url
+            interviewer, interviewee, insights, thumbnail_url, youtube_url, publish_date
         ))
     
     return cards_data
@@ -49,6 +51,7 @@ def card(
     insights: List[str],
     thumbnail_url: str,
     youtube_url: str,
+    publish_date: str,
 ) -> rx.Component:
     """The card.
 
@@ -77,19 +80,26 @@ def card(
                 rx.hstack(
                     rx.image(
                         src=thumbnail_url,
-                        height="100px",
-                        border_radius="5px"
+                        height="110px",
+                        width="70%",
+                        style={"object-fit": "cover"},
+                        border_radius="5px",
                     ),
                     rx.spacer(),
                     rx.vstack(
                         rx.heading(interviewee, size="6"),
                         rx.heading(f"Interviewed by {interviewer}", size="2"),
                     ),
+                    align="center",
+                ),
+                
+                rx.text(
+                    f"Upload Date: {publish_date}"
                 ),
 
                 rx.list.ordered(
                     *map(map_rx_item, insights)
-                )
+                ),
             ),
             padding="1em",
             _hover={
@@ -97,11 +107,14 @@ def card(
                 "transition": "opacity 0.3s ease-in-out",
             },
         ),
-        height="20em",
+        height="22em",
         href=youtube_url,
         target="_blank",
         text_decoration="none",
         color="inherit",
+        background_color="white",
+        border_radius="10px",
+        style={"box_shadow": "rgba(239, 239, 240, 0.8) 4px 4px"},
     )
 
 def cards() -> rx.Component:
@@ -114,10 +127,12 @@ def cards() -> rx.Component:
             card_data.insights,
             card_data.thumbnail_url,
             card_data.youtube_url,
+            card_data.publish_date,
         )
 
     return rx.grid(
         *map(map_cards, cards_data),
         columns="3",
         width="100%",
+        gap="20px",
     )

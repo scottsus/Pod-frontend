@@ -1,4 +1,4 @@
-"""The home page of the app."""
+"""The search page of the app."""
 
 from Podly import styles
 from Podly.templates import template
@@ -7,8 +7,8 @@ from Podly.components.card import cards
 import reflex as rx
     
 
-@rx.page(route="/", title="Home")
-def index():
+@rx.page(route="/Search", title="Search")
+def Search():
     return rx.box(
         rx.vstack(
             rx.button(
